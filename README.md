@@ -1,1 +1,1 @@
-[زر إلى موقعنا](https://saraalhmud.github.io/cargold)
+[🔗 زيارة الموقع](https://saraalhmud.github.io/cargold/)
