@@ -149,8 +149,15 @@
 
     <div class="form-row">
         <label><input type="checkbox" name="sold" value="1" {{ old('sold') ? 'checked' : '' }}> هل تم بيع السيارة؟</label>
-        <label><input type="checkbox" name="show_complaints" value="1" {{ old('show_complaints') ? 'checked' : '' }}> عرض الشكاوى</label>
-    </div>
+    <!-- حقل مخفي بقيمة 0 (يتفعّل فقط إذا ما تم اختيار الـ checkbox) -->
+<input type="hidden" name="show_complaints" value="0">
+
+<!-- الـ checkbox نفسه -->
+<label>
+    <input type="checkbox" name="show_complaints" value="1" {{ old('show_complaints') ? 'checked' : '' }}>
+    عرض الشكاوى
+</label>
+  </div>
 
     <button type="submit">حفظ بيانات السيارة</button>
 </form>
