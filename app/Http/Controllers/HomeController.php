@@ -41,6 +41,7 @@ public function store(Request $request)
         // إذا لم يكن المستخدم مسجلًا، قم بإعادة التوجيه إلى صفحة تسجيل الدخول مع رسالة
         return redirect()->route('login')->with('error', 'يرجى تسجيل الدخول قبل إرسال الشكوى.');
     }
+
     $request->validate([
         'customer_name' => 'required|string|max:255',
         'phone_email' => 'required|string|max:255',
@@ -49,12 +50,8 @@ public function store(Request $request)
         'car_id' => 'required|exists:cars,id',
     ]);
 
-    // تحقق من أن الشكوى مسموحة لهذه السيارة
+    // العثور على السيارة
     $car = Car::findOrFail($request->car_id);
-
-    if (!$car->show_complaints) {
-        return redirect()->back()->with('error', 'لا يمكن إرسال الشكوى لهذه السيارة.');
-    }
 
     // إنشاء الشكوى
     $complaint = new Complaint();
@@ -70,6 +67,7 @@ public function store(Request $request)
     // إعادة التوجيه مع رسالة النجاح
     return redirect()->back()->with('success', 'تم إرسال الشكوى بنجاح');
 }
+
 
 
 }
