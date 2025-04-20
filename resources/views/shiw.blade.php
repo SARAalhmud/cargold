@@ -203,18 +203,21 @@
         يجب عليك تسجيل الدخول أولاً لإرسال الشكوى.
     </div>
 @endif
+@if($car->complaints->count())
+    @foreach($car->complaints as $complaint)
+        @php
+            $userIsOwner = Auth::check() && Auth::user()->id === $car->user_id;
+            $userIsComplainer = Auth::check() && Auth::user()->id === $complaint->user_id;
+        @endphp
 
-        @if($car->show_complaints)
-        @if(Auth::check())
-        @foreach($car->complaints as $complaint)
-            @if(Auth::user()->id === $complaint->user_id)  {{-- عرض الشكوى فقط لصاحبها --}}
-                <div class="alert alert-warning mt-4">
-                    <strong>شكوىك:</strong> {{ $complaint->content }}
-                </div>
-            @endif
-        @endforeach
-    @endif
-    @endif
+        @if($car->show_complaints || $userIsOwner || $userIsComplainer)
+            <div class="alert alert-warning mt-4">
+                <strong>شكوى:</strong> {{ $complaint->content }}
+            </div>
+        @endif
+    @endforeach
+@endif
+
 </div>
 </div>
 </div>
